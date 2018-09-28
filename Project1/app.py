@@ -1,10 +1,17 @@
+
 import sys   
 import Adafruit_DHT
 from PyQt5.QtWidgets import QApplication, QDialog
-from myQT import Ui_Dialog
-#import matplotlib.pyplot as plt
-import time
 
+from login import Ui_login
+from myQT import Ui_Dialog
+#import numpy
+import matplotlib.pyplot as plt
+
+#import matplotlib
+import time
+hum_list = []
+temp_list = []
 num = 0
 total_temp = 0
 avg_t = 0
@@ -13,12 +20,29 @@ avg_h = 0
 flag = 0
 alarm_t = 0
 alarm_h = 0
-#humidity, temperature = Adafruit_DHT.read(22, 4)  
-class AppWindow(QDialog):
+
+
+"""class LoginWindow(QDialog):
     def __init__(self):
         super().__init__()
+        self.li = Ui_login()
+        self.li.setupUi(self)
+        self.li.ok.clicked.connect(self.Login)
+
+        
+    def Login(self):
+        val = self.li.password.text()
+        print(val)
+        if val == 'shreya' :
+            print('Logged in')
+            self.li.ok.clicked.connect(self.Exit)
+            print('closed')"""
+class AppWindow(QDialog):
+#humidity, temperature = Adafruit_DHT.read(22, 4)
+     def __init__(self):
+        super().__init__()
         self.ui = Ui_Dialog()
-        self.ui.setupUi(self)
+        self.ui.setupUi(self)                
         humidity, temperature = Adafruit_DHT.read(22, 4)    
         if humidity is None and temperature is None:
             print('The sensor must be disconnected')
@@ -44,7 +68,8 @@ class AppWindow(QDialog):
         self.ui.temp_alarm.valueChanged.connect(self.valuechange)
         self.ui.hum_alarm.valueChanged.connect(self.valuechange)
         
-    def SensorReadings(self):
+        
+     def SensorReadings(self):
         global total_temp,num,total_hum
         #start = time.clock()
         humidity,temperature = Adafruit_DHT.read(22, 4)
@@ -59,6 +84,11 @@ class AppWindow(QDialog):
             self.ui.sensor_stat.setText('Sensor is connected')
             temp = '{0:0.1f}'.format(temperature)
             hum = '{0:0.1f}%'.format(humidity)
+            temp_list.append(temp)
+            
+            hum_list.append(hum)
+            print(temp_list)
+            print(hum_list)
             num = num+1
             total_temp = total_temp + temperature
             total_hum = total_hum + humidity
@@ -66,7 +96,7 @@ class AppWindow(QDialog):
             avg_temperature = '{0:0.1f}'.format(avg_t)
             avg_h = total_hum/num
             avg_humidity = '{0:0.1f}%'.format(avg_h)
-            for x in range(0,num):
+            #for x in range(0,num):
                 #print('ot')
             #print(avg_temperature)
             self.ui.temp_level.setValue(float(temperature))
@@ -79,7 +109,7 @@ class AppWindow(QDialog):
             self.ui.temp_alarm.valueChanged.connect(self.valuechange)
             self.ui.hum_alarm.valueChanged.connect(self.valuechange)
         
-    def Cel_Faran(self):
+     def Cel_Faran(self):
         global flag
         humidity,temperature = Adafruit_DHT.read_retry(22, 4)
         if flag == 0:
@@ -88,27 +118,31 @@ class AppWindow(QDialog):
         temp = '{0:0.1f}'.format(temperature)
         self.ui.temp_val.setText(temp)
         
-    def valuechange(self):
-      global alarm_t,alarm_h
-      humidity,temperature = Adafruit_DHT.read_retry(22, 4)
-      alarm_t = self.ui.temp_alarm.value()
-      print('Temp alarm set:' ,alarm_t)
-      alarm_h = self.ui.hum_alarm.value()
-      print('hum alarm set:' ,alarm_h)
-      print(temperature)
-      if alarm_t < temperature:
-          print('alarm')
-          self.ui.alarm.setText('TEMP-ALARM')
-      elif alarm_h < humidity:
-          self.ui.alarm.setText('HUM-ALARM')
-      elif alarm_h < humidity and alarm_t < temperature:
-          self.ui.alarm.setText('TEMP & HUM ALARM')
-      else:
-          self.ui.alarm.setText('NO ALARM')
-      #print(alarm_h)
-        
-    def Exit(self):
-        sys.exit(app.exec_())
+     def valuechange(self):
+         global alarm_t,alarm_h
+         humidity,temperature = Adafruit_DHT.read_retry(22, 4)
+         alarm_t = self.ui.temp_alarm.value()
+         print('Temp alarm set:' ,alarm_t)
+         alarm_h = self.ui.hum_alarm.value()
+         print('hum alarm set:' ,alarm_h)
+         print(temperature)
+         if alarm_t < temperature and alarm_h > humidity:
+             print('alarm')
+             self.ui.alarm.clear
+             self.ui.alarm.setText('TEMP-ALARM')
+         elif alarm_h < humidity and alarm_t > temperature:
+             self.ui.alarm.clear
+             self.ui.alarm.setText('HUM-ALARM')
+         elif alarm_h < humidity and alarm_t < temperature:
+             self.ui.alarm.clear
+             self.ui.alarm.setText('TEMP & HUM ALARM')
+         else:
+             self.ui.alarm.clear
+             self.ui.alarm.setText('NO ALARM')
+          #print(alarm_h)
+     
+     def Exit(self):
+         sys.exit(app.exec_())
         
   
    
@@ -116,6 +150,9 @@ class AppWindow(QDialog):
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
+    #w = LoginWindow()
+    #w.show()
     w = AppWindow()
-    w.show()
+    a=w.show()
+    print(str(a))
     sys.exit(app.exec_())
