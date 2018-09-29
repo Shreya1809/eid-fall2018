@@ -32,6 +32,9 @@
    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <widget class="QLineEdit" name="temp_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -103,6 +106,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="time_req">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -126,6 +132,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="hum_val">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>680</x>
@@ -149,6 +158,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="avg_temp">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>200</x>
@@ -185,6 +197,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="avg_hum">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>680</x>
@@ -208,6 +223,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="sensor_stat">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>430</x>
@@ -257,6 +275,9 @@
    </property>
   </widget>
   <widget class="QProgressBar" name="hum_level">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>700</x>
@@ -347,6 +368,9 @@
    </property>
   </widget>
   <widget class="QProgressBar" name="temp_level">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>220</x>
@@ -376,6 +400,9 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="alarm">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>602</x>
