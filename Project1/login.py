@@ -1,3 +1,5 @@
+# Author: Shreya Chakraborty
+# generated from login.ui using the command : pyuic5 login.ui > login.py
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'login.ui'
