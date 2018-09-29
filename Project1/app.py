@@ -53,10 +53,9 @@ class LoginWindow(QDialog):
         elif key == 'eid' and user != 'shreya':
             self.li.username.setText('Wrong Username')
         elif key != 'eid' and user == 'shreya':
-            self.li.password.setText('Wrong Password')
+            self.li.username.setText('Wrong Password')
         else:
-            self.li.password.setText('Wrong Password')
-            self.li.username.setText('Wrong Username')
+            self.li.username.setText('Wrong User & Password')
             
 #class for the application window            
 class AppWindow(QDialog):
