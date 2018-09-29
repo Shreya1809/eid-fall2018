@@ -19,7 +19,7 @@ class Ui_Dialog(object):
         self.temp_val.setGeometry(QtCore.QRect(200, 110, 113, 33))
         self.temp_val.setObjectName("temp_val")
         self.refresh = QtWidgets.QPushButton(Dialog)
-        self.refresh.setGeometry(QtCore.QRect(390, 530, 101, 31))
+        self.refresh.setGeometry(QtCore.QRect(240, 530, 101, 31))
         self.refresh.setObjectName("refresh")
         self.cel_faran = QtWidgets.QPushButton(Dialog)
         self.cel_faran.setGeometry(QtCore.QRect(330, 110, 61, 31))
@@ -108,6 +108,9 @@ class Ui_Dialog(object):
         self.alarm = QtWidgets.QLineEdit(Dialog)
         self.alarm.setGeometry(QtCore.QRect(602, 450, 221, 33))
         self.alarm.setObjectName("alarm")
+        self.gen_graph = QtWidgets.QPushButton(Dialog)
+        self.gen_graph.setGeometry(QtCore.QRect(520, 530, 151, 29))
+        self.gen_graph.setObjectName("gen_graph")
 
         self.retranslateUi(Dialog)
         self.temp_alarm.valueChanged['int'].connect(self.label_11.setNum)
@@ -137,4 +140,5 @@ class Ui_Dialog(object):
         self.label_12.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600; color:#00007f;\">VALUE</span></p></body></html>"))
         self.temp_level.setFormat(_translate("Dialog", "%p"))
         self.label_13.setText(_translate("Dialog", "<html><head/><body><p align=\"center\"><span style=\" font-size:14pt; font-weight:600; color:#00007f;\">ALARM:</span></p></body></html>"))
+        self.gen_graph.setText(_translate("Dialog", "Generate Graph"))
 

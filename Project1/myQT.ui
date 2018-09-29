@@ -44,7 +44,7 @@
   <widget class="QPushButton" name="refresh">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>240</x>
      <y>530</y>
      <width>101</width>
      <height>31</height>
@@ -383,6 +383,19 @@
      <width>221</width>
      <height>33</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="gen_graph">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>530</y>
+     <width>151</width>
+     <height>29</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Generate Graph</string>
    </property>
   </widget>
  </widget>
