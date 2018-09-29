@@ -1,15 +1,22 @@
+#@Author: Shreya Chakraborty
+#Project 1 EID-2018
+#Professor: Bruce Montgomery
+#references:
+#1.https://www.tutorialspoint.com/python/python_date_time.htm
+#2.https://www.geeksforgeeks.org/graph-plotting-in-python-set-1/
+#3.https://stackoverflow.com/questions/11812000/login-dialog-pyqt
+#4.https://pythonspot.com/pyqt5/
+
 import sys   
 import Adafruit_DHT
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QDialog
-
 from login import Ui_login
 from myQT import Ui_Dialog
 import numpy
 import matplotlib.pyplot as plt
-
-#import matplotlib
 import time
+#global variables used:
 hum_list = []
 temp_list = []
 time_list = []
@@ -25,7 +32,8 @@ alarm_t = 0
 alarm_h = 0
 avg_humidity = 0
 avg_temperature = 0
-
+count = 0
+#class for initial login window
 class LoginWindow(QDialog):
     def __init__(self):
         super(LoginWindow,self).__init__()
@@ -33,7 +41,7 @@ class LoginWindow(QDialog):
         self.li.setupUi(self)
         self.li.ok.clicked.connect(self.Login)
 
-        
+#function for login called when pressed 'ok' on login window        
     def Login(self):
         key = self.li.password.text()
         user = self.li.username.text()
@@ -50,6 +58,7 @@ class LoginWindow(QDialog):
             self.li.password.setText('Wrong Password')
             self.li.username.setText('Wrong Username')
             
+#class for the application window            
 class AppWindow(QDialog):
      def __init__(self):
         super(AppWindow,self).__init__()
@@ -81,11 +90,11 @@ class AppWindow(QDialog):
         self.ui.hum_alarm.valueChanged.connect(self.valuechange)
         self.ui.gen_graph.clicked.connect(self.Graph)
         
-        
+#function called when 'refresh' button is clicked        
      def SensorReadings(self):
-        global total_temp,num,total_hum,avg_humidity,avg_temperature,total_h
-        #start = time.clock()
+        global total_temp,num,total_hum,avg_humidity,avg_temperature,total_h,count
         humidity,temperature = Adafruit_DHT.read(22, 4)
+        #if sensor is diconnected
         if temperature is None and humidity is None :
             print('sensor disconnect')
             self.ui.sensor_stat.setText('Sensor is disconnected')
@@ -93,11 +102,12 @@ class AppWindow(QDialog):
             self.ui.hum_level.setValue(0)
             
             
-        else:
+        else: #sensor is connected
+            count = count +1 #increment the count
             self.ui.sensor_stat.setText('Sensor is connected')
             temp = '{0:0.1f}'.format(temperature)
             hum = '{0:0.1f}%'.format(humidity)
-            temp_list.append(temperature)
+            temp_list.append(temperature) #add temp value captured in a list for plotting
             hum_list.append(humidity)
             num = num+1
             total_temp = total_temp + temperature
@@ -116,11 +126,12 @@ class AppWindow(QDialog):
             self.ui.hum_val.setText(hum)
             self.ui.time_req.setText(time.ctime())
             localtime = time.localtime(time.time())
-            #https://www.tutorialspoint.com/python/python_date_time.htm
+            # reference -https://www.tutorialspoint.com/python/python_date_time.htm
             time_list.append(localtime.tm_sec)
             self.ui.temp_alarm.valueChanged.connect(self.valuechange)
             self.ui.hum_alarm.valueChanged.connect(self.valuechange)
-        
+            
+#function to convert celcius to farenheit on clicking'C/F'        
      def Cel_Faran(self):
         global flag
         humidity,temperature = Adafruit_DHT.read_retry(22, 4)
@@ -129,7 +140,8 @@ class AppWindow(QDialog):
             flag = 1
         temp = '{0:0.1f}'.format(temperature)
         self.ui.temp_val.setText(temp)
-        
+
+#function to check alarm condition for the slider
      def valuechange(self):
          global alarm_t,alarm_h
          humidity,temperature = Adafruit_DHT.read_retry(22, 4)
@@ -152,28 +164,31 @@ class AppWindow(QDialog):
              self.ui.alarm.clear
              self.ui.alarm.setText('NO ALARM')
          
-     
+#function for exiting the application on clicking 'close'     
      def Exit(self):
          sys.exit(app.exec_())
-        
+ 
+#function to plot a graph on clicking 'generate graph' button 
      def Graph(self):   #https://www.geeksforgeeks.org/graph-plotting-in-python-set-1/
-        #print(avg_humidity)
-        plt.plot(time_list,temp_list,'o-', label = "temperature")   
-        plt.plot(time_list,hum_list, 'o-', label = "humidity")
-        plt.plot(time_list,avg_hum_list, '--', label = "avg hum")
-        plt.plot(time_list,avg_temp_list, '--', label = "avg hum")
-        plt.xlabel('time axis') 
-        plt.ylabel('temp/humidity') 
-        plt.title('Temperature and humidty graph!')
-        plt.legend() 
-        plt.show()
+        if count < 5:
+           print('Not enough values to generate a graph')
+        else:
+            plt.plot(time_list,temp_list,'o-', label = "temperature")   
+            plt.plot(time_list,hum_list, 'o-', label = "humidity")
+            plt.plot(time_list,avg_hum_list, '--', label = "avg hum")
+            plt.plot(time_list,avg_temp_list, '--', label = "avg hum")
+            plt.xlabel('time axis') 
+            plt.ylabel('temp/humidity') 
+            plt.title('Temperature and humidty graph!')
+            plt.legend() 
+            plt.show()
            
      
-    
+#main     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     log = LoginWindow()
-    if log.exec_() == QtWidgets.QDialog.Accepted: #reference - vipraja
+    if log.exec_() == QtWidgets.QDialog.Accepted: #reference -https://stackoverflow.com/questions/11812000/login-dialog-pyqt
        w = AppWindow()
        a=w.show()
        sys.exit(app.exec_())
