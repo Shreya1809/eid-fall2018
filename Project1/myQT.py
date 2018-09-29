@@ -1,3 +1,5 @@
+# Author: Shreya Chakraborty
+# generated from myQT.ui using the command : pyuic5 myQT.ui > myQT.py
 # -*- coding: utf-8 -*-
 
 # Form implementation generated from reading ui file 'myQT.ui'
