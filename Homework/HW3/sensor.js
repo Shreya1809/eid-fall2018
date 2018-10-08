@@ -1,3 +1,7 @@
+//Reference- https://github.com/momenso/node-dht-sensor
+//https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
+//Author - Shreya C
+
 var sensor = require('node-dht-sensor');
 var temp = [];
 var sum_temp = 0;
